@@ -70,10 +70,9 @@ const ProductPage = () => {
     fetchData();
   }, []);
 
-
   return (
     <>
-      <Link href="/products">products</Link>
+      {/* <Link href="/products">products</Link> */}
       <div>
         <Container>
           <ContentWrapper>
@@ -94,7 +93,7 @@ const ProductPage = () => {
                     style={{
                       padding: "8px 12px",
                       background:
-                        selectedCategory === cat ? "#0d6efd" : "#f0f0f0",
+                        selectedCategory === cat ? "#517fc4" : "#f0f0f0",
                       color: selectedCategory === cat ? "#fff" : "#000",
                       border: "none",
                       borderRadius: "6px",

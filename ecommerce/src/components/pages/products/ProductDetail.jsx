@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { productDetail } from "@/utils/services/api";
 import Image from "next/image";
 import styled from "@emotion/styled";
@@ -11,6 +11,7 @@ import {
   plusIcon,
   yellowStar,
 } from "@/assets/icons/icons";
+import { CartContext } from "@/contexts/CartContext";
 
 const ContentWrapper = styled.div`
   /* border: 1px solid red; */
@@ -109,6 +110,8 @@ const Value = styled.p`
 
 const ProductDetail = ({ id }) => {
   const [product, setProduct] = useState(null);
+  const { cart, updateCartQuantity } = useContext(CartContext);
+  const cartQuantity = cart[id] || 0;
 
   useEffect(() => {
     if (!id) return;
@@ -120,9 +123,16 @@ const ProductDetail = ({ id }) => {
 
     fetchDetailProduct();
   }, [id]);
-  console.log(product?.data);
 
   if (!product) return <p>Loading...</p>;
+
+  const handleAddToCart = () => {
+    updateCartQuantity(id, cartQuantity + 1);
+  };
+
+  const handleRemoveFromCart = () => {
+    updateCartQuantity(id, cartQuantity > 0 ? cartQuantity - 1 : 0);
+  };
 
   return (
     <>
@@ -146,9 +156,9 @@ const ProductDetail = ({ id }) => {
             <p>{product?.data?.description}</p>
             <hr />
             <ButtonContainer>
-              <button>{minusIcon}</button>
-              <Value>1</Value>
-              <button>{plusIcon}</button>
+              <button onClick={handleRemoveFromCart}>{minusIcon}</button>
+              <Value>{cartQuantity}</Value>
+              <button onClick={handleAddToCart}>{plusIcon}</button>
             </ButtonContainer>
             <InfoContainer>
               <Holder>{heartIcon} Add To Wishlist</Holder>
