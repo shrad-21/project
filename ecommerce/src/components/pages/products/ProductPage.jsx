@@ -12,20 +12,39 @@ import {
 import Link from "next/link";
 
 const ContentWrapper = styled.div`
-  /* background-color: red; */
+  //  background-color: red; 
+
+   
 `;
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-`;
-const Title = styled.h4``;
+  grid-template-columns: 1fr ;
+
+  @media(min-width:552px){
+    grid-template-columns: 1fr 1fr;
+  }
+    @media(min-width:768px){
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  @media(min-width:992px){
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  `;
+const Title = styled.h4`
+  text-decoration: none;
+  color:black;
+  font-size:20px;
+
+  `;
 const Card = styled(Link)`
-  border: 1px solid red;
+  border: 1px solid black;
   display: flex;
   flex-direction: column;
   gap: 20px;
   cursor: pointer;
+  align-items:center;
 `;
 
 const Category = styled.div`
@@ -43,12 +62,26 @@ const ProductPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      const response = await getAllCategories();
-      setCategories(response.data || []);
-    };
+     const fetchValidCategories = async () => {
+    const response = await getAllCategories();
+    const allCategories = response.data || [];
 
-    fetchCategories();
+    const validCategories = [];
+
+    for (const cat of allCategories) {
+      const products = await getProductsByCategory(cat.name);
+
+      if (Array.isArray(products) && products.length > 0) {
+        validCategories.push(cat);
+      }
+
+      if (validCategories.length === 5) break; 
+    }
+
+    setCategories(validCategories);
+  };
+
+  fetchValidCategories();
   }, []);
 
   useEffect(() => {

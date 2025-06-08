@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 
 const StyledNavbar = styled.div`
-  padding: 40px;
+  padding: 40px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;

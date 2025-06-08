@@ -127,11 +127,15 @@ const ProductDetail = ({ id }) => {
   if (!product) return <p>Loading...</p>;
 
   const handleAddToCart = () => {
-    updateCartQuantity(id, cartQuantity + 1);
+    if (cartQuantity < 5) {
+      updateCartQuantity(id, cartQuantity + 1);
+    }
   };
 
   const handleRemoveFromCart = () => {
-    updateCartQuantity(id, cartQuantity > 0 ? cartQuantity - 1 : 0);
+    if (cartQuantity > 1) {
+      updateCartQuantity(id, cartQuantity > 0 ? cartQuantity - 1 : 0);
+    }
   };
 
   return (
@@ -160,6 +164,20 @@ const ProductDetail = ({ id }) => {
               <Value>{cartQuantity}</Value>
               <button onClick={handleAddToCart}>{plusIcon}</button>
             </ButtonContainer>
+
+            {cartQuantity >= 5 && (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "12px",
+                  marginTop: "-10px",
+                  marginBottom: "15px",
+                }}
+              >
+                Maximum quantity of 5 reached.
+              </p>
+            )}
+            
             <InfoContainer>
               <Holder>{heartIcon} Add To Wishlist</Holder>
               <Holder>

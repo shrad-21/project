@@ -4,9 +4,31 @@ import { CartContext } from "@/contexts/CartContext";
 import { productDetail } from "@/utils/services/api";
 import Image from "next/image";
 import Button from "@/components/Button";
+import styled from "@emotion/styled";
+import { minusIcon, plusIcon } from "@/assets/icons/icons";
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #e8e8ec;
+  border-radius: 20px;
+  width: 25%;
+  margin-bottom: 20px;
+  button {
+    padding: 5px;
+    background: transparent;
+    border: none;
+  }
+`;
+const Value = styled.p`
+  color: red;
+  padding: 5px;
+  margin-top: 0;
+  margin-bottom: 0;
+`;
 const CartPage = () => {
-  const { cart, removeFromCart } = useContext(CartContext); //jo maine context se liya hai
+  const { cart, removeFromCart, updateCartQuantity } = useContext(CartContext); //jo maine context se liya hai
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -49,6 +71,39 @@ const CartPage = () => {
             <p>Price: ${product.price}</p>
             <p>Quantity: {cart[product.id]}</p>
             <p>Subtotal: ${product.price * cart[product.id]}</p>
+            <ButtonContainer>
+              <button
+                onClick={() =>
+                  updateCartQuantity(product.id, cart[product.id] - 1)
+                }
+                disabled={cart[product.id] <= 1}
+              >
+                {minusIcon}
+              </button>
+
+              <Value>{cart[product.id]}</Value>
+
+              <button
+                onClick={() =>
+                  updateCartQuantity(product.id, cart[product.id] + 1)
+                }
+                disabled={cart[product.id] >= 5}
+              >
+                {plusIcon}
+              </button>
+            </ButtonContainer>
+            { cart[product.id] >= 5 && (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "12px",
+                  marginTop: "-10px",
+                  marginBottom: "15px",
+                }}
+              >
+                Maximum quantity of 5 reached.
+              </p>
+            )}
             <Button
               text="delete"
               onClick={() => removeFromCart(product.id)}
