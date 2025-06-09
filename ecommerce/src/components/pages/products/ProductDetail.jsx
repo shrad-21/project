@@ -16,22 +16,47 @@ import { CartContext } from "@/contexts/CartContext";
 const ContentWrapper = styled.div`
   /* border: 1px solid red; */
   display: flex;
+  flex-direction: column;
   padding-top: 200px;
   justify-content: space-between;
   gap: 40px;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `;
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
+  padding: 20px;
+
+  @media (min-width: 768px) {
+    width: 50%;
+  }
 `;
 const ImageContainer = styled.div`
-  width: 50%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: #f7ede1;
   border-radius: 10px;
+
+  img {
+    /* border: 1px solid green; */
+    height: 250px;
+    width: 250px;
+  }
+
+  @media (min-width: 768px) {
+    width: 50%;
+    img {
+      /* border: 1px solid green; */
+      height: 400px;
+      width: 400px;
+    }
+  }
 `;
 const Price = styled.p`
   font-size: 25px;
@@ -65,10 +90,17 @@ const RatingContainer = styled.div`
   }
 `;
 const RatingCard = styled.div`
-  /* border: 1px solid red; */
+  /* border: 1px solid green; */
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 20px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media (min-width: 992px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 `;
 
 const Card = styled.div`
@@ -177,9 +209,9 @@ const ProductDetail = ({ id }) => {
                 Maximum quantity of 5 reached.
               </p>
             )}
-            
+
             <InfoContainer>
-              <Holder>{heartIcon} Add To Wishlist</Holder>
+              {/* <Holder>{heartIcon} Add To Wishlist</Holder> */}
               <Holder>
                 {CheckIcon} {product?.data?.returnPolicy}
               </Holder>
