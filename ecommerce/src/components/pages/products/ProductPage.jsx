@@ -16,13 +16,15 @@ import { categoryImages } from "@/utils/constants";
 const ContentWrapper = styled.div`
   /* background-color: green; */
   display: flex;
-  gap: 50px;
+  gap: 30px;
   align-items: flex-start;
 `;
 
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
+  position: relative;
+  top: 50px;
 
   @media (min-width: 552px) {
     grid-template-columns: 1fr 1fr;
