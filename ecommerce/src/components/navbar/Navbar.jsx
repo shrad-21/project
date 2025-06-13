@@ -1,13 +1,14 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { cartIcon, heartIcon } from "@/assets/icons/icons";
 import { CartContext } from "@/contexts/CartContext";
 import { Container } from "react-bootstrap";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { FiMenu, FiX } from "react-icons/fi";
+import { gsap } from "gsap";
 
-const StyledNavbar = styled.div`
+const StyledNavbar = styled.nav`
   padding: 40px 0;
   display: flex;
   justify-content: space-between;
@@ -38,7 +39,6 @@ const StyledLink = styled(Link)`
 const LinksContainer = styled.div`
   display: flex;
   gap: 20px;
-  
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -62,6 +62,17 @@ const MenuToggle = styled.div`
   }
 `;
 const Navbar = () => {
+  useEffect(() => {
+    var tl = gsap.timeline();
+    tl.from(".logo, .nav-link, .cart-icon", {
+      y: -300,
+      duration: 1,
+      opacity: 0,
+      delay: 1,
+      stagger:0.2
+    });
+  }, []);
+
   const { cart } = useContext(CartContext);
   const totalQuantity = Object.values(cart).reduce((sum, qty) => sum + qty, 0);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -80,23 +91,39 @@ const Navbar = () => {
         </MenuToggle>
 
         <LinksContainer open={menuOpen}>
-          <StyledLink href="/" onClick={() => setMenuOpen(false)}>
+          <StyledLink
+            className="nav-link"
+            href="/"
+            onClick={() => setMenuOpen(false)}
+          >
             Home
           </StyledLink>
-          <StyledLink href="/about" onClick={() => setMenuOpen(false)}>
+          <StyledLink
+            className="nav-link"
+            href="/about"
+            onClick={() => setMenuOpen(false)}
+          >
             About
           </StyledLink>
-          <StyledLink href="/products" onClick={() => setMenuOpen(false)}>
+          <StyledLink
+            className="nav-link"
+            href="/products"
+            onClick={() => setMenuOpen(false)}
+          >
             Products
           </StyledLink>
-          <StyledLink href="/contact" onClick={() => setMenuOpen(false)}>
+          <StyledLink
+            className="nav-link"
+            href="/contact"
+            onClick={() => setMenuOpen(false)}
+          >
             Contact
           </StyledLink>
         </LinksContainer>
 
         <IconHolder>
           <CartContainer>
-            <Link href="/cart">
+            <Link className="cart-icon" href="/cart">
               <div style={{ position: "relative", display: "inline-block" }}>
                 {cartIcon}
                 {totalQuantity > 0 && (

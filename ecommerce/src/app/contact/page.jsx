@@ -1,3 +1,4 @@
+"use client";
 import ContactPage from "@/components/pages/contact/ContactPage";
 import React from "react";
 
