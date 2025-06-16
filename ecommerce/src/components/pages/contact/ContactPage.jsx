@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 import { OfficeIcon, PhoneIcon } from "@/assets/icons/icons";
 import { gsap } from "gsap";
 import Input from "@/components/formComponents/Input";
+import { usePathname } from "next/navigation";
 
 const StyledHeading = styled.h2`
   font-size: 40px;
@@ -51,45 +52,52 @@ const InputContainer = styled.div`
   display: flex;
   gap: 20px;
 `;
-const FormInput=styled.div`
+const FormInput = styled.div`
   display: flex;
   flex-direction: column;
-  gap:20px;
-`
+  gap: 20px;
+`;
 const ContactPage = () => {
+  const pathname = usePathname();
   useEffect(() => {
-    var tl = gsap.timeline();
-    tl.from(".heading", {
-      x: -300,
-      duration: 0.5,
-      opacity: 0,
-      delay: 1,
-      stagger: 0.2,
-    });
-    tl.from(
-      ".bold-right-text, .normal-right-text",
-      {
-        x: -300,
-        duration: 0.5,
-        opacity: 0,
-        delay: 1,
-        stagger: 0.2,
-      },
-      0
-    );
+  // Set elements to hidden state first
+  gsap.set(".heading", { opacity: 0, x: -300 });
+  gsap.set(".bold-right-text, .normal-right-text", { opacity: 0, x: -300 });
+  gsap.set(".bold-left-text, .normal-left-text, .info-cont", { opacity: 0, x: 300 });
 
-    tl.from(
-      ".bold-left-text, .normal-left-text, .info-cont",
-      {
-        x: 300,
-        duration: 0.5,
-        opacity: 0,
-        delay: 1,
-        stagger: 0.2,
-      },
-      0
-    );
-  }, []);
+  // Then run the animation
+  const tl = gsap.timeline();
+  tl.to(".heading", {
+    x: 0,
+    opacity: 1,
+    duration: 0.9,
+    stagger: 0.2,
+  });
+  tl.to(
+    ".bold-right-text, .normal-right-text",
+    {
+      x: 0,
+      opacity: 1,
+      duration: 0.9,
+      stagger: 0.2,
+    },
+    0
+  );
+  tl.to(
+    ".bold-left-text, .normal-left-text, .info-cont",
+    {
+      x: 0,
+      opacity: 1,
+      duration: 0.9,
+      stagger: 0.2,
+    },
+    0
+  );
+
+  return () => {
+    tl.kill();
+  };
+}, [pathname]);
 
   return (
     <>
@@ -105,7 +113,7 @@ const ContactPage = () => {
               nobis illo aliquam inventore ducimus,
             </StyledPara>
 
-            <FormInput>
+            <FormInput className="form0">
               <InputContainer>
                 <Input
                   label="First Name"
