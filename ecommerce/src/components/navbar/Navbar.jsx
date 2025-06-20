@@ -62,16 +62,16 @@ const MenuToggle = styled.div`
   }
 `;
 const Navbar = () => {
-  useEffect(() => {
-    var tl = gsap.timeline();
-    tl.from(".logo, .nav-link, .cart-icon", {
-      y: -300,
-      duration: 1,
-      opacity: 0,
-      delay: 1,
-      stagger:0.2
-    });
-  }, []);
+  // useEffect(() => {
+  //   var tl = gsap.timeline();
+  //   tl.from(".logo, .nav-link, .cart-icon", {
+  //     y: -300,
+  //     duration: 1,
+  //     opacity: 0,
+  //     delay: 1,
+  //     stagger:0.2
+  //   });
+  // }, []);
 
   const { cart } = useContext(CartContext);
   const totalQuantity = Object.values(cart).reduce((sum, qty) => sum + qty, 0);

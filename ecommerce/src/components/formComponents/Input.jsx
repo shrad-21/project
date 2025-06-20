@@ -4,9 +4,20 @@ import styled from "@emotion/styled";
 
 const Wrapper = styled.div`
   input {
-    border: none;
-    border-bottom: 1px solid black;
+    padding: 15px;
+    width: 100%;
+    border: 0.5px solid #ccc;
+    border-radius: 5px;
 
+    &:hover {
+      border: 0.5px solid black;
+      transition: 0.3s ease-in-out;
+    }
+    &:focus {
+      border: 0.2px solid black;
+      transition: 0.3s ease-in-out;
+      outline: none;
+    }
     &::placeholder {
       font-size: 15px;
     }
